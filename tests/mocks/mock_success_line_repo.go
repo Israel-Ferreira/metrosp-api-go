@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"strconv"
 
 	"github.com/Israel-Ferreira/metrosp-api/models"
 	"github.com/Israel-Ferreira/metrosp-api/repo"
@@ -45,6 +46,20 @@ func (mckLine *MockSuccessLineRepo) Delete(_ uint64) error {
 	return nil
 }
 
+func (mckLine *MockSuccessLineRepo) FindByLineNumber(lineNumber uint) (models.Line, error) {
+	var line models.Line
+
+	lineNumberUint := strconv.Itoa(int(lineNumber))
+
+	for _, lin := range mckLine.lines {
+		if lin.Number == lineNumberUint {
+			line = lin
+		}
+	}
+
+	return line, nil
+}
+
 func (mckLine *MockSuccessLineRepo) Update(id uint64, line models.Line) error {
 	linha, err := mckLine.FindById(id)
 
@@ -61,7 +76,7 @@ func (mckLine *MockSuccessLineRepo) Update(id uint64, line models.Line) error {
 
 func NewMockLineRepo(errorMock bool) repo.LineRepo {
 	if errorMock {
-		return nil
+		return &MockErrorLineRepo{}
 	}
 
 	return &MockSuccessLineRepo{

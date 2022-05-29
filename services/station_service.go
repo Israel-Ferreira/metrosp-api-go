@@ -120,3 +120,7 @@ func NewStationService(stationRepo repo.StationRepo, lineRepo repo.LineRepo) Sta
 		lineRepository: lineRepo,
 	}
 }
+
+func NewEmptyStationService() StationService {
+	return &stationService{}
+}

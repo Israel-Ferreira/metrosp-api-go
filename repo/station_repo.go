@@ -9,3 +9,7 @@ type StationRepo interface {
 	Delete(id uint64) error
 	Update(uint64, models.Station) error
 }
+
+
+type DbStationRepo struct {}
+
