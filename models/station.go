@@ -3,6 +3,7 @@ package models
 import "github.com/Israel-Ferreira/metrosp-api/data"
 
 type Station struct {
+	ID               uint64 `json:"id"`
 	Name             string `json:"name"`
 	Neighborhood     string `json:"neighborhood"`
 	Street           string `json:"street"`

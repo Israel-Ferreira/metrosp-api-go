@@ -6,6 +6,6 @@ type LineRepo interface {
 	FindAll() ([]models.Line, error)
 	FindById(id uint64) (models.Line, error)
 	Create(models.Line) (models.Line, error)
-	Delete(id uint64) error
+	Delete(uint64) error
 	Update(uint64, models.Line) error
 }
