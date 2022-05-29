@@ -1,9 +1,12 @@
 package models
 
+import "gorm.io/gorm"
+
 type Line struct {
-	ID        uint64  `json:"id"`
-	Number    string  `json:"number"`
-	Color     string  `json:"color"`
-	Extension float64 `json:"extension"`
-	MapImgUrl string  `json:"mapImgUrl"`
+	gorm.Model
+	Number    string    `json:"number"`
+	Color     string    `json:"color"`
+	Extension float64   `json:"extension"`
+	MapImgUrl string    `json:"mapImgUrl"`
+	Stations  []Station `json:"stations"`
 }

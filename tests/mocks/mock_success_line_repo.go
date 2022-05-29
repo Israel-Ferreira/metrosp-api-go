@@ -22,7 +22,7 @@ func (mckLine *MockSuccessLineRepo) FindById(id uint64) (models.Line, error) {
 	var subwayLine models.Line
 
 	for _, line := range mckLine.lines {
-		if line.ID == id {
+		if line.ID == uint(id) {
 			lineIsFound = true
 			subwayLine = line
 		}
@@ -37,7 +37,7 @@ func (mckLine *MockSuccessLineRepo) FindById(id uint64) (models.Line, error) {
 }
 
 func (mckLine *MockSuccessLineRepo) Create(line models.Line) (models.Line, error) {
-	line.ID = rand.Uint64()
+	line.ID = uint(rand.Uint64())
 	return line, nil
 }
 

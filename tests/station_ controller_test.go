@@ -90,6 +90,26 @@ func TestGetByIdEndpoint(t *testing.T) {
 			t.Errorf("Expected 404, but returns %d \n", w.Result().StatusCode)
 		}
 	})
+
+	t.Run("Deve retornar 404, se ocorrer um erro", func(t *testing.T) {
+		svc := services.NewStationService(mocks.NewMockStationRepo(true), &mocks.MockSuccessLineRepo{})
+		router := server.SetupServer(svc, nil)
+
+		w := httptest.NewRecorder()
+		id := rand.Uint64()
+
+		req, err := http.NewRequest(http.MethodGet, fmt.Sprintf("/api/stations/%d", id), nil)
+
+		router.ServeHTTP(w, req)
+
+		if err != nil {
+			t.Errorf("Error on Requisition:  %v \n", err)
+		}
+
+		if w.Result().StatusCode != 404 {
+			t.Errorf("Expected 404, but returns %d \n", w.Result().StatusCode)
+		}
+	})
 }
 
 func TestCreate(t *testing.T) {

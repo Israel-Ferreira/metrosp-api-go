@@ -1,6 +1,9 @@
 package repo
 
-import "github.com/Israel-Ferreira/metrosp-api/models"
+import (
+	"github.com/Israel-Ferreira/metrosp-api/models"
+	"gorm.io/gorm"
+)
 
 type LineRepo interface {
 	FindAll() ([]models.Line, error)
@@ -9,3 +12,9 @@ type LineRepo interface {
 	Delete(uint64) error
 	Update(uint64, models.Line) error
 }
+
+type DbLineRepo struct {
+	Db *gorm.DB
+}
+
+

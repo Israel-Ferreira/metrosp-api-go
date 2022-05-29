@@ -22,7 +22,7 @@ func (mckStation *MockSuccessStationRepo) FindById(id uint64) (models.Station, e
 	var subwayStation models.Station
 
 	for _, station := range mckStation.stations {
-		if station.ID == id {
+		if uint64(station.ID) == id {
 			stationIsFound = true
 			subwayStation = station
 		}
@@ -37,7 +37,7 @@ func (mckStation *MockSuccessStationRepo) FindById(id uint64) (models.Station, e
 }
 
 func (mckStation *MockSuccessStationRepo) Create(line models.Station) (models.Station, error) {
-	line.ID = rand.Uint64()
+	line.ID = uint(rand.Uint64())
 	return line, nil
 }
 
