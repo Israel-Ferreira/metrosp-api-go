@@ -37,7 +37,7 @@ func SetupLinesRoutes(r *gin.Engine, lineService services.LineService) {
 	lineRouter := r.Group("/api/lines")
 	{
 		lineRouter.GET("", lineController.GetAll)
-		lineRouter.POST("", func(ctx *gin.Context) {})
+		lineRouter.POST("", lineController.Create)
 
 		lineRouter.GET("/:id", func(ctx *gin.Context) {})
 		lineRouter.PUT("/:id", func(ctx *gin.Context) {})
