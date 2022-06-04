@@ -64,6 +64,28 @@ func (controller LinesController) Create(ctx *gin.Context) {
 
 }
 
+func (controller *LinesController) FindById(ctx *gin.Context) {
+	id, _ := ctx.Params.Get("id")
+
+	line, err := controller.lineService.FindById(id)
+
+	if err != nil {
+		if err == exceptions.ErrorNotFound {
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"err": err.Error(),
+			})
+		} else {
+			ctx.JSON(http.StatusUnprocessableEntity, gin.H{
+				"err": err.Error(),
+			})
+		}
+
+		return
+	}
+
+	ctx.JSON(http.StatusOK, line)
+}
+
 func NewLineController(lineService services.LineService) LinesController {
 	return LinesController{
 		lineService: lineService,

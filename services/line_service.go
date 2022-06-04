@@ -38,7 +38,7 @@ func (ls *lineService) FindById(id string) (models.Line, error) {
 	line, err := ls.lineRepo.FindById(intId)
 
 	if err != nil {
-		return models.Line{}, err
+		return models.Line{}, exceptions.ErrorNotFound
 	}
 
 	return line, nil
@@ -59,7 +59,7 @@ func (ls *lineService) Create(dto data.LineDTO) (models.Line, error) {
 
 	line, err := ls.lineRepo.FindByLineNumber(uint(lineNumber))
 
-	if err != nil {
+	if err != nil && err.Error() != "record not found" {
 		return models.Line{}, err
 	}
 

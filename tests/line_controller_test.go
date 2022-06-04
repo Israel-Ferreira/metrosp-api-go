@@ -112,6 +112,24 @@ func TestGetAllLineEndpoint(t *testing.T) {
 
 	})
 
+	t.Run("Deve retornar o status 200", func(t *testing.T) {
+		lineSvc := services.NewLineService(mocks.NewMockLineRepo(false))
+		stationSvc := services.NewEmptyStationService()
+
+		w := httptest.NewRecorder()
+
+		router := server.SetupServer(stationSvc, lineSvc)
+
+		req, _ := http.NewRequest(http.MethodGet, "/api/lines", nil)
+
+		router.ServeHTTP(w, req)
+
+		if w.Result().StatusCode != 200 {
+			t.Errorf("Expected 200, but returns %d \n", w.Result().StatusCode)
+		}
+
+	})
+
 }
 
 func TestGetLineById(t *testing.T) {
