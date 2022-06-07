@@ -34,7 +34,7 @@ func (repo *DbLineRepo) FindById(id uint64) (models.Line, error) {
 
 	subwayLine := models.Line{Model: gorm.Model{ID: uint(id)}}
 
-	txn := repo.db.First(&subwayLine)
+	txn := repo.db.Preload("Stations").First(&subwayLine)
 
 	if txn.Error != nil {
 		return models.Line{}, txn.Error

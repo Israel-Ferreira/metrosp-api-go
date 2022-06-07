@@ -10,18 +10,18 @@ type Station struct {
 	Name             string `json:"name"`
 	Neighborhood     string `json:"neighborhood"`
 	Street           string `json:"street"`
-	LineID           int  `json:"lineId"`
+	LineID           int    `json:"lineId"`
 	ImgUrl           string `json:"imgUrl"`
 	InaugurationDate string `json:"inaugurationDate"`
 }
 
-func NewStation(data data.StationDTO) Station {
+func NewStation(data data.StationDTO, LineId uint) Station {
 	return Station{
 		Name:             data.Name,
 		Street:           data.Street,
-		LineID:           int(data.LineNumber),
+		LineID:           int(LineId),
 		Neighborhood:     data.Neighborhood,
 		InaugurationDate: data.InaugurationDate,
-		ImgUrl:           data.ImagesUrls[0],
+		ImgUrl:           "",
 	}
 }

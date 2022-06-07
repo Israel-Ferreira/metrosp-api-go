@@ -39,7 +39,7 @@ func SetupLinesRoutes(r *gin.Engine, lineService services.LineService) {
 		lineRouter.GET("", lineController.GetAll)
 		lineRouter.POST("", lineController.Create)
 
-		lineRouter.GET("/:id", func(ctx *gin.Context) {})
+		lineRouter.GET("/:id", lineController.FindById)
 		lineRouter.PUT("/:id", func(ctx *gin.Context) {})
 		lineRouter.DELETE("/:id", func(ctx *gin.Context) {})
 	}

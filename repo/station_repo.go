@@ -1,8 +1,6 @@
 package repo
 
 import (
-	"fmt"
-
 	"github.com/Israel-Ferreira/metrosp-api/models"
 	"gorm.io/gorm"
 )
@@ -53,15 +51,15 @@ func (dbRepo DbStationRepo) Delete(_ uint64) error {
 }
 
 func (dbRepo DbStationRepo) Update(id uint64, station models.Station) error {
-	estacao, err := dbRepo.FindById(id)
+	txn := dbRepo.db.Save(&station)
 
-	if err != nil {
-		return err
+	if txn.Error != nil {
+		return txn.Error
 	}
 
-	fmt.Println(estacao)
-
-	fmt.Println(station)
-
 	return nil
+}
+
+func NewStationDbRepo(db *gorm.DB) StationRepo {
+	return DbStationRepo{db: db}
 }

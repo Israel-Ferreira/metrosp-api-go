@@ -12,9 +12,11 @@ func main() {
 	config.SetupDb()
 
 	lineRepo := repo.NewLineRepo(config.Db)
+	stationRepo := repo.NewStationDbRepo(config.Db)
 
 	lineSvc := services.NewLineService(lineRepo)
+	stationSvc := services.NewStationService(stationRepo, lineRepo)
 
-	router := server.SetupServer(nil, lineSvc)
+	router := server.SetupServer(stationSvc, lineSvc)
 	router.Run(":5000")
 }
