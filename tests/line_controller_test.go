@@ -24,7 +24,7 @@ func TestCreateLineEndpoint(t *testing.T) {
 
 		line := data.LineDTO{
 			Color:       "Rosa",
-			Number:      "",
+			Number:      0,
 			Extension:   28.8,
 			MapImageUrl: "",
 		}
@@ -50,7 +50,7 @@ func TestCreateLineEndpoint(t *testing.T) {
 
 		line := data.LineDTO{
 			Color:       "Rosa",
-			Number:      "20",
+			Number:      20,
 			Extension:   28.8,
 			MapImageUrl: "",
 		}
@@ -76,7 +76,7 @@ func TestCreateLineEndpoint(t *testing.T) {
 
 		line := data.LineDTO{
 			Color:       "Rosa",
-			Number:      "15",
+			Number:      15,
 			Extension:   28.8,
 			MapImageUrl: "",
 		}

@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
-	"strconv"
 
 	"github.com/Israel-Ferreira/metrosp-api/models"
 	"github.com/Israel-Ferreira/metrosp-api/repo"
@@ -49,10 +48,8 @@ func (mckLine *MockSuccessLineRepo) Delete(_ uint64) error {
 func (mckLine *MockSuccessLineRepo) FindByLineNumber(lineNumber uint) (models.Line, error) {
 	var line models.Line
 
-	lineNumberUint := strconv.Itoa(int(lineNumber))
-
 	for _, lin := range mckLine.lines {
-		if lin.Number == lineNumberUint {
+		if lin.Number == lineNumber {
 			line = lin
 		}
 	}

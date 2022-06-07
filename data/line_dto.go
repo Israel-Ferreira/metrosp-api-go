@@ -4,7 +4,7 @@ import "errors"
 
 type LineDTO struct {
 	Color       string  `json:"color"`
-	Number      string  `json:"number"`
+	Number      int     `json:"number"`
 	MapImageUrl string  `json:"mapImageUrl"`
 	Extension   float64 `json:"extension"`
 }
@@ -14,7 +14,7 @@ func (dto LineDTO) IsValid() error {
 		return errors.New("erro: a cor da linha não pode estar vazia")
 	}
 
-	if dto.Number == "" {
+	if dto.Number <= 0 {
 		return errors.New("erro:  O número não pode estar vazio")
 	}
 

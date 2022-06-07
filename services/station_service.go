@@ -63,13 +63,13 @@ func (svc *stationService) Create(dto data.StationDTO) (models.Station, error) {
 		return models.Station{}, err
 	}
 
-	line, err := svc.lineRepository.FindByLineNumber(uint(dto.LineNumber))
+	_, err := svc.lineRepository.FindByLineNumber(uint(dto.LineNumber))
 
 	if err != nil {
 		return models.Station{}, err
 	}
 
-	station := models.NewStation(dto, line.ID)
+	station := models.NewStation(dto)
 
 	station, err = svc.repository.Create(station)
 

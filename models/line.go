@@ -7,16 +7,16 @@ import (
 
 type Line struct {
 	gorm.Model
-	Number    string    `json:"number"`
-	Color     string    `json:"color"`
+	Number    uint      `json:"number" gorm:"unique"`
+	Color     string    `json:"color" gorm:"unique"`
 	Extension float64   `json:"extension"`
 	MapImgUrl string    `json:"mapImgUrl"`
-	Stations  []Station `json:"stations"`
+	Stations  []Station `json:"stations" gorm:"foreignKey:LineNumber;references:Number"`
 }
 
 func NewLine(dto data.LineDTO) Line {
 	return Line{
-		Number:    dto.Number,
+		Number:    uint(dto.Number),
 		Extension: dto.Extension,
 		MapImgUrl: dto.MapImageUrl,
 		Color:     dto.Color,

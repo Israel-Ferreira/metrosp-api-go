@@ -51,13 +51,9 @@ func (ls *lineService) Create(dto data.LineDTO) (models.Line, error) {
 		return models.Line{}, exceptions.ErrorValidation
 	}
 
-	lineNumber, err := parseIdToUint64(dto.Number)
+	lineNumber := uint(dto.Number)
 
-	if err != nil {
-		return models.Line{}, err
-	}
-
-	line, err := ls.lineRepo.FindByLineNumber(uint(lineNumber))
+	line, err := ls.lineRepo.FindByLineNumber(lineNumber)
 
 	if err != nil && err.Error() != "record not found" {
 		return models.Line{}, err
