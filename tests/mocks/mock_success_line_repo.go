@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
+	"github.com/Israel-Ferreira/metrosp-api/exceptions"
 	"github.com/Israel-Ferreira/metrosp-api/models"
 	"github.com/Israel-Ferreira/metrosp-api/repo"
 )
@@ -52,6 +53,10 @@ func (mckLine *MockSuccessLineRepo) FindByLineNumber(lineNumber uint) (models.Li
 		if lin.Number == lineNumber {
 			line = lin
 		}
+	}
+
+	if line.ID == 0 {
+		return line, exceptions.ErrorNotFound
 	}
 
 	return line, nil

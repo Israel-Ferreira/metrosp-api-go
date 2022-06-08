@@ -1,6 +1,9 @@
 package repo
 
 import (
+	"strings"
+
+	"github.com/Israel-Ferreira/metrosp-api/exceptions"
 	"github.com/Israel-Ferreira/metrosp-api/models"
 	"gorm.io/gorm"
 )
@@ -70,6 +73,11 @@ func (repo *DbLineRepo) FindByLineNumber(lineNumber uint) (models.Line, error) {
 	result := repo.db.Where(&models.Line{Number: line.Number}).First(&line)
 
 	if result.Error != nil {
+
+		if strings.Contains(result.Error.Error(), "record not found") {
+			return models.Line{}, exceptions.ErrorNotFound
+		}
+
 		return models.Line{}, result.Error
 	}
 

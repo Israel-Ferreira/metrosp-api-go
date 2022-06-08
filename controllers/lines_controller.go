@@ -3,6 +3,7 @@ package controllers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 
 	"github.com/Israel-Ferreira/metrosp-api/data"
 	"github.com/Israel-Ferreira/metrosp-api/exceptions"
@@ -26,6 +27,40 @@ func (controller *LinesController) GetAll(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, lines)
+}
+
+func (controller LinesController) GetLineByNumber(ctx *gin.Context) {
+	lineNumber, _ := ctx.Params.Get("lineNumber")
+
+	lineNumberInt, err := strconv.ParseUint(lineNumber, 10, 64)
+
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"msg": err.Error(),
+		})
+
+		return
+	}
+
+	line, err := controller.lineService.FindByLineNumber(uint(lineNumberInt))
+
+	if err != nil {
+		if err == exceptions.ErrorNotFound {
+			ctx.JSON(http.StatusNotFound, gin.H{
+				"msg": err.Error(),
+			})
+
+			return
+		}
+
+		ctx.JSON(http.StatusUnprocessableEntity, gin.H{
+			"msg": err.Error(),
+		})
+
+		return
+	}
+
+	ctx.JSON(http.StatusOK, line)
 }
 
 func (controller LinesController) Create(ctx *gin.Context) {

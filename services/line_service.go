@@ -10,6 +10,7 @@ import (
 type LineService interface {
 	FindAll() ([]models.Line, error)
 	FindById(id string) (models.Line, error)
+	FindByLineNumber(lineNumber uint) (models.Line, error)
 	Create(data.LineDTO) (models.Line, error)
 	Update(string, data.LineDTO) error
 }
@@ -26,6 +27,16 @@ func (ls *lineService) FindAll() ([]models.Line, error) {
 	}
 
 	return lines, nil
+}
+
+func (ls *lineService) FindByLineNumber(lineNumber uint) (models.Line, error) {
+	line, err := ls.lineRepo.FindByLineNumber(lineNumber)
+
+	if err != nil {
+		return models.Line{}, err
+	}
+
+	return line, nil
 }
 
 func (ls *lineService) FindById(id string) (models.Line, error) {
@@ -55,7 +66,7 @@ func (ls *lineService) Create(dto data.LineDTO) (models.Line, error) {
 
 	line, err := ls.lineRepo.FindByLineNumber(lineNumber)
 
-	if err != nil && err.Error() != "record not found" {
+	if err != nil && err != exceptions.ErrorNotFound {
 		return models.Line{}, err
 	}
 
