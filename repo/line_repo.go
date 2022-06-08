@@ -70,7 +70,7 @@ func (repo *DbLineRepo) Update(id uint64, line models.Line) error {
 func (repo *DbLineRepo) FindByLineNumber(lineNumber uint) (models.Line, error) {
 	var line models.Line
 
-	result := repo.db.Where(&models.Line{Number: line.Number}).First(&line)
+	result := repo.db.Preload("Stations").First(&line, "number = ?", lineNumber)
 
 	if result.Error != nil {
 
